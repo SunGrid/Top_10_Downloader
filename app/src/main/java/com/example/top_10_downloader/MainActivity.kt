@@ -30,14 +30,20 @@ class FeedEntry {
 class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
 
+    private val downloadData by lazy { DownloadData(this, xmlListView) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         Log.d(TAG, "onCreate Called")
-        val downloadData = DownloadData(this, xmlListView)
         downloadData.execute("http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=10/xml")
         Log.d(TAG, "onCreate: done")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        downloadData.cancel(true)
     }
 
     companion object {
@@ -45,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             private val TAG = "DownloadData"
 
             var propContext : Context by Delegates.notNull()
-            var propListView : ListView = listView
+            var propListView : ListView by Delegates.notNull()
 
             init {
                 propContext = context
@@ -58,8 +64,10 @@ class MainActivity : AppCompatActivity() {
                 val parseApplications = ParseApplications()
                 parseApplications.parse(result)
 
-                val arrayAdapter = ArrayAdapter<FeedEntry>(propContext, R.layout.list_item, parseApplications.applications)
-                propListView.adapter = arrayAdapter
+//                val arrayAdapter = ArrayAdapter<FeedEntry>(propContext, R.layout.list_item, parseApplications.applications)
+//                propListView.adapter = arrayAdapter
+                val feedAdapter = FeedAdapter(propContext, R.layout.list_record, parseApplications.applications)
+                propListView.adapter = feedAdapter
             }
 
             override fun doInBackground(vararg url: String?): String {
