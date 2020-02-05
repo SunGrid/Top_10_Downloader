@@ -11,6 +11,9 @@
     <item
         android:id="@+id/mnuSongs"
         android:title="Songs" />
+    <item
+        android:id="@+id/mnuRefresh"
+        android:title="Refresh" />
     <group
         android:id="@+id/mnugrpLimit"
         android:checkableBehavior="single">
