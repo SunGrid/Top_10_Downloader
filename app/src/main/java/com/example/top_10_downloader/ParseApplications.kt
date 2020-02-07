@@ -22,6 +22,7 @@ class ParseApplications {
             xpp.setInput(xmlData.reader())
             var eventType = xpp.eventType
             var currentRecord = FeedEntry()
+            var href = ""
 
             while (eventType != XmlPullParser.END_DOCUMENT){
                 val tagName = xpp.name?.toLowerCase()
@@ -33,6 +34,13 @@ class ParseApplications {
 
                         if (tagName == "entry") {
                             inEntry = true
+                        }
+                        if (tagName == "link"){
+                            Log.d(TAG, "parse: Found Link tag with this link ${xpp.getAttributeValue(null, "href")}")
+                            href = xpp.getAttributeValue(null, "href")
+                        }
+                        if (tagName == "image"){
+                            Log.d(TAG, "parse: image found as: ${xpp.name}")
                         }
                     }
 
@@ -50,6 +58,7 @@ class ParseApplications {
                                     currentRecord = FeedEntry() //create new object
                                 }
                                 "name" -> currentRecord.name = textValue
+                                "link" -> currentRecord.link = href //textValue
                                 "artist" -> currentRecord.artist = textValue
                                 "releasedate" -> currentRecord.releaseDate = textValue
                                 "summary" -> currentRecord.summary = textValue

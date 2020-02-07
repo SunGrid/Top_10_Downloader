@@ -14,6 +14,7 @@ import kotlin.properties.Delegates
 
 class FeedEntry {
     var name: String = ""
+    var link: String = ""
     var artist: String = ""
     var releaseDate: String = ""
     var summary: String = ""
