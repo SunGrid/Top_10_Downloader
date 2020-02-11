@@ -1,18 +1,22 @@
 package com.example.top_10_downloader
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
+
+import androidx.core.content.ContextCompat.startActivity
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.list_item.view.*
+
 
 class ViewHolder(v: View) {
     val tvName: TextView = v.findViewById(R.id.tvName)
-    val tvLink : TextView = v.findViewById(R.id.tvLink)
+    //val tvLink : TextView = v.findViewById(R.id.tvLink)
     val tvArtist: TextView = v.findViewById(R.id.tvArtist)
     val tvSummary: TextView = v.findViewById(R.id.tvSummary)
    // val tvImageUrl: TextView = v.findViewById(R.id.tvImageUrl)
@@ -50,13 +54,22 @@ class FeedAdapter(context: Context, private val resource: Int, private val appli
 
 
         val currentApp = applications[position]
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(currentApp.link))
 
         viewHolder.tvName.text = currentApp.name
-        viewHolder.tvLink.text = currentApp.link
+
+        viewHolder.tvName.setOnClickListener{
+            startActivity(this.context, intent, null)
+        }
+        //viewHolder.tvLink.text = currentApp.link
         viewHolder.tvArtist.text = currentApp.artist
         viewHolder.tvSummary.text = currentApp.summary
         //viewHolder.tvImageUrl.text = currentApp.imageURL
-        Picasso.get().load(currentApp.imageURL).into(viewHolder.ivImage)
+        Picasso.get().load(currentApp.imageURL).resize(150,150).into(viewHolder.ivImage)
+
+        viewHolder.ivImage.setOnClickListener{
+            startActivity(this.context, intent, null)
+        }
 
         return view
     }

@@ -69,6 +69,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
         menuInflater.inflate(R.menu.feeds_menu, menu)
 
         if (feedLimit == 10) {
