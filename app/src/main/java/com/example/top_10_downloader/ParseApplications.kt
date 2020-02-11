@@ -26,7 +26,9 @@ class ParseApplications {
 
             while (eventType != XmlPullParser.END_DOCUMENT){
                 val tagName = xpp.name?.toLowerCase()
+                //val prfx = xpp.prefix?.toLowerCase()
 
+                Log.d(TAG, "parse: Found Tag as $tagName ")
                 when (eventType){
 
                     XmlPullParser.START_TAG -> {
