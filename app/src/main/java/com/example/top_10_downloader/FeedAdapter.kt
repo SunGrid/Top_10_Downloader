@@ -3,6 +3,7 @@ package com.example.top_10_downloader
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import com.squareup.picasso.Picasso
 
+private const val TAG = "FeedAdapter"
 
 class ViewHolder(v: View) {
     val tvName: TextView = v.findViewById(R.id.tvName)
@@ -24,22 +26,31 @@ class ViewHolder(v: View) {
 }
 
 
-class FeedAdapter(context: Context, private val resource: Int, private val applications: List<FeedEntry> )
+class FeedAdapter(context: Context, private val resource: Int, private var applications: List<FeedEntry> )
     : ArrayAdapter<FeedEntry>(context, resource){
 
     private val inflater = LayoutInflater.from(context)
 
+    fun setFeedList(feedList: List<FeedEntry>){
+        Log.d(TAG, " setFeedList = $feedList")
+        this.applications = feedList
+        notifyDataSetChanged()
+    }
+
     override fun getCount(): Int {
+        Log.d(TAG, "getCount called")
         return applications.size
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-
+        Log.d(TAG, "getView called")
+        Log.d(TAG, " .getView position: $position")
         val view: View
         val viewHolder: ViewHolder
 
 
         if (convertView == null){
+            Log.d(TAG, "getView called with null convertView")
             view = inflater.inflate(resource, parent, false)
             viewHolder = ViewHolder(view)
             view.tag = viewHolder

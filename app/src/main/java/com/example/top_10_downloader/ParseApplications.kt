@@ -5,8 +5,10 @@ import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.lang.Exception
 
+private const val TAG = "ParseAppications"
+
 class ParseApplications {
-    private val TAG = "ParseAppications"
+
     val applications = ArrayList<FeedEntry>()
 
     fun parse(xmlData: String) : Boolean {
@@ -28,7 +30,7 @@ class ParseApplications {
                 val tagName = xpp.name?.toLowerCase()
                 //val prfx = xpp.prefix?.toLowerCase()
 
-                Log.d(TAG, "parse: Found Tag as $tagName ")
+                //Log.d(TAG, "parse: Found Tag as $tagName ")
                 when (eventType){
 
                     XmlPullParser.START_TAG -> {
